@@ -35,6 +35,11 @@ android {
     buildFeatures {
         compose = true
     }
+    dependencies {
+        // ... your existing dependencies ...
+
+        implementation("androidx.compose.material:material-icons-extended")
+    }
 }
 
 dependencies {
