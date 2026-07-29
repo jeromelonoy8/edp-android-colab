@@ -45,7 +45,7 @@ fun ProfileScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "AD",
+                    text = "Jm",
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.headlineSmall
                 )
