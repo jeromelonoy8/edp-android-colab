@@ -4,22 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import kotlin.coroutines.coroutineContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,36 +21,33 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    // 1. Initialize the NavController
+                    val navController = rememberNavController()
+
+                    // 2. Set up the NavHost inside the scaffold padding to respect edge-to-edge
+                    NavHost(
+                        navController = navController,
+                        startDestination = Home,
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) {
+
+                        // Home Screen Destination
+                        composable<Home> {
+                            HomeScreen(onShowGreeting = { typedName ->
+                                // Pass the name by creating a Greeting route object
+                                navController.navigate(Greeting(userName = typedName))
+                            })
+                        }
+
+                        // Greeting Screen Destination
+                        composable<Greeting> { backStackEntry ->
+                            // Rebuild the typed Greeting object on this screen
+                            val greeting: Greeting = backStackEntry.toRoute()
+                            GreetingScreen(userName = greeting.userName)
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.padding(all = 16.dp)
-            .fillMaxWidth()
-            .background(color= MaterialTheme.colorScheme.surfaceDim),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Hello Jerome Yu",
-            textAlign = TextAlign.Center,
-            modifier = modifier.padding(all = 20.dp)
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        Greeting("Android")
     }
 }
