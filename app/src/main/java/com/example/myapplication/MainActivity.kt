@@ -3,16 +3,17 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import androidx.compose.ui.Modifier
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Your custom chill theme wrapper
-            MyApplicationTheme {
-                Surface {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     ProfileScreen()
                 }
             }

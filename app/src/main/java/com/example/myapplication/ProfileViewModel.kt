@@ -11,23 +11,14 @@ class ProfileViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
-    fun onNameChange(value: String) =
-        _uiState.update { it.copy(name = value) }
 
-    fun onEmailChange(value: String) =
-        _uiState.update { it.copy(email = value) }
+    fun onNameChange(value: String) = _uiState.update { it.copy(name = value) }
+    fun onEmailChange(value: String) = _uiState.update { it.copy(email = value) }
+    fun onContactChange(value: String) = _uiState.update { it.copy(contactNumber = value) }
+    fun onAddressChange(value: String) = _uiState.update { it.copy(address = value) }
+    fun onUsernameChange(value: String) = _uiState.update { it.copy(username = value) }
+    fun onNewSkillChange(value: String) = _uiState.update { it.copy(newSkill = value) }
 
-    fun onContactChange(value: String) =
-        _uiState.update { it.copy(contactNumber = value) }
-
-    fun onAddressChange(value: String) =
-        _uiState.update { it.copy(address = value) }
-
-    fun onUsernameChange(value: String) =
-        _uiState.update { it.copy(username = value) }
-
-    fun onNewSkillChange(value: String) =
-        _uiState.update { it.copy(newSkill = value) }
 
     fun addSkill() {
         val skill = _uiState.value.newSkill.trim()
@@ -35,7 +26,7 @@ class ProfileViewModel : ViewModel() {
         _uiState.update { current ->
             current.copy(
                 skills = current.skills + skill,
-                newSkill = ""
+                newSkill = "",
             )
         }
     }
@@ -45,6 +36,7 @@ class ProfileViewModel : ViewModel() {
             current.copy(skills = current.skills - skill)
         }
     }
+
 
     fun showPreview() = _uiState.update { it.copy(isPreview = true) }
     fun backToEdit() = _uiState.update { it.copy(isPreview = false) }

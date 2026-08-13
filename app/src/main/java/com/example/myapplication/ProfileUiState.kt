@@ -8,5 +8,5 @@ data class ProfileUiState(
     val username: String = "",
     val skills: List<String> = emptyList(),
     val newSkill: String = "",
-    val isPreview: Boolean = false
+    val isPreview: Boolean = false,
 )
