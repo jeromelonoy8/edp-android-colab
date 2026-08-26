@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    // --- YOUR ORIGINAL LIBRARIES ---
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
@@ -53,4 +54,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // --- FORCED REPLACEMENTS FOR MISSING LIBRARIES ---
+    // 1. Navigation Support
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+
+    // 2. ViewModel & State Collection[cite: 1]
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+    // 3. Extended Icons Library
+    implementation("androidx.compose.material:material-icons-extended:1.7.0")
 }

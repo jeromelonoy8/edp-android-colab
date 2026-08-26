@@ -2,10 +2,11 @@ package com.example.myapplication.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Modern Minimal Sage & Charcoal Palette
+val CharcoalDark = Color(0xFF1A1F1C)
+val SageGreen = Color(0xFF5A7265)
+val SageLight = Color(0xFF8FA89B)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val MilkWhite = Color(0xFFF9FBF9)
+val SoftGrey = Color(0xFFEFF2EF)
+val SageMuted = Color(0xFFDCE3DE)
