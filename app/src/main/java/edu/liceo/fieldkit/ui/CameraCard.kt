@@ -8,8 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -23,7 +21,7 @@ fun CameraCard() {
     val cameraPermission = rememberPermission(Manifest.permission.CAMERA)
     val capture = remember { ImageCapture.Builder().build() }
     var photo by remember { mutableStateOf<File?>(null) }
-    
+
     var cam by remember { mutableStateOf<Camera?>(null) }
     var torchOn by remember { mutableStateOf(false) }
 
@@ -38,25 +36,27 @@ fun CameraCard() {
                 feature = "Camera",
                 reason = "We need the camera to photograph the issue you report."
             ) {
-                // TODO 9a: CameraPreview for capture, full width, 240.dp tall
+                // TODO 9a: Camera preview
                 CameraPreview(capture, Modifier.fillMaxWidth().height(240.dp)) { cam = it }
-                
-                // TODO 9b: Button "Take photo" that calls takePhoto and saves into photo
+
+                // TODO 9b: Take photo button
                 Button(onClick = {
                     takePhoto(context, capture) { saved -> photo = saved }
                 }) {
                     Text("Take photo")
                 }
-                
-                // TODO 9c: Text showing the saved file name, only when photo is not null
+
+                // TODO 9c: Photo file path text
                 photo?.let { Text("Saved: ${it.name}") }
 
                 // TODO 13: Shake capture (Bonus)
                 val shake = rememberAccelerometer()
+                val isShaking by remember { derivedStateOf { isShake(shake) } }
                 var lastShot by remember { mutableLongStateOf(0L) }
-                LaunchedEffect(shake) {
+
+                LaunchedEffect(isShaking) {
                     val now = System.currentTimeMillis()
-                    if (isShake(shake) && now - lastShot > 1500) {
+                    if (isShaking && now - lastShot > 1500) {
                         lastShot = now
                         takePhoto(context, capture) { saved -> photo = saved }
                         context.buzz()
@@ -64,7 +64,7 @@ fun CameraCard() {
                     }
                 }
 
-                // TODO 14: Flashlight (Bonus)
+                // TODO 14: Flashlight / Torch (Bonus)
                 if (cam?.cameraInfo?.hasFlashUnit() == true) {
                     Button(onClick = {
                         torchOn = !torchOn
@@ -74,8 +74,8 @@ fun CameraCard() {
                     }
                 }
             }
-            
-            // GIVEN (read it, do not change it): thumbnail of the last photo
+
+            // Last photo thumbnail preview
             photo?.let { f ->
                 val thumb = remember(f) { loadThumb(f) }
                 thumb?.let {
